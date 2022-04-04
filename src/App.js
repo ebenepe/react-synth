@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import * as Tone from "tone";
+import { useState } from "react";
 
 function App() {
+  const [note, setNote] = useState("C4");
+  const [noteValue, setNoteValue] = useState("4n");
+
+
+  const synth = new Tone.Synth().toDestination();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input
+        placeholder="Enter note"
+        onChange={(evt) => {
+          setNote(evt.target.value);
+        }}
+      />
+      <input
+        placeholder="Enter note value"
+        onChange={(evt) => {
+          setNoteValue(evt.target.value);
+        }}
+      />
+      <button onClick={() => synth.triggerAttackRelease(note, noteValue)}>
+        PLAY
+      </button>
     </div>
   );
 }
